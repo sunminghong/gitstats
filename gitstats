@@ -102,6 +102,10 @@ def getstatsummarycounts(line):
 		numbers.append(0);    # only insertions were printed on line
 	elif len(numbers) == 2 and line.find('(-)') != -1:
 		numbers.insert(1, 0); # only deletions were printed on line
+        if int(numbers[0]) > 50 or int(numbers[1])>3000 or int(numbers[2])>4000:
+            #print('*'*30,line)
+            #print('*'*30,numbers)
+            return (0,0,0)
 	return numbers
 
 VERSION = 0
