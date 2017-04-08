@@ -143,6 +143,7 @@ class DataCollector:
 		self.stamp_created = time.time()
 		self.cache = {}
 		self.total_authors = 0
+		self.total_repos = []
 		self.activity_by_hour_of_day = {} # hour -> commits
 		self.activity_by_day_of_week = {} # day -> commits
 		self.activity_by_month_of_year = {} # month [1-12] -> commits
@@ -290,6 +291,7 @@ class GitDataCollector(DataCollector):
 	def collect(self, dir):
 		DataCollector.collect(self, dir)
 
+                self.total_repos.append(dir)
 		self.total_authors += int(getpipeoutput(['git shortlog -s %s' % getlogrange(), 'wc -l']))
 		#self.total_lines = int(getoutput('git-ls-files -z |xargs -0 cat |wc -l'))
 
@@ -699,6 +701,9 @@ class GitDataCollector(DataCollector):
 	
 	def getTotalAuthors(self):
 		return self.total_authors
+
+	def getTotalRepos(self):
+                return self.total_repos
 	
 	def getTotalCommits(self):
 		return self.total_commits
@@ -768,6 +773,10 @@ class HTMLReportCreator(ReportCreator):
 		f.write('<dt>Total Lines of Code</dt><dd>%s (%d added, %d removed)</dd>' % (data.getTotalLOC(), data.total_lines_added, data.total_lines_removed))
 		f.write('<dt>Total Commits</dt><dd>%s (average %.1f commits per active day, %.1f per all days)</dd>' % (data.getTotalCommits(), float(data.getTotalCommits()) / len(data.getActiveDays()), float(data.getTotalCommits()) / data.getCommitDeltaDays()))
 		f.write('<dt>Authors</dt><dd>%s (average %.1f commits per author)</dd>' % (data.getTotalAuthors(), (1.0 * data.getTotalCommits()) / data.getTotalAuthors()))
+
+                reposnum = len(data.getTotalRepos())
+		f.write('<dt>Repos</dt><dd>%s (average %.1f commits per repo)</dd>' % (reposnum, (1.0 * data.getTotalCommits()) / reposnum))
+		f.write('<dd>%s</dd>' % ('<br/>'.join(data.getTotalRepos())))
 		f.write('</dl>')
 
 		f.write('</body>\n</html>')

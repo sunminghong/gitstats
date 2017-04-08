@@ -3,6 +3,16 @@ for developers, as a way to check some development statistics for a project.
 
 Currently it produces only HTML output with tables and graphs.
 
+How to use?
+===========
+1. generate one repo stats
+    >> python2.7 gitstats repo_path report_dir   
+2. read git repos from gitolite-admin/config/gitolite.conf 
+    >> cp config.py.sample to config.py   
+    >> vim config.py  
+    >> python2.7 report_gitolite.py  
+
+
 Requirements
 ============
 - Python (>= 2.6.0)
@@ -20,3 +30,4 @@ Contributions
 =============
 Patches should be sent under "GPLv2 or later" license - this will allow
 upgrading to newer GPL versions if they are sensible.
+

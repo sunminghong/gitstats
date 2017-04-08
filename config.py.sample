@@ -1,0 +1,27 @@
+
+# dir for git clone repo
+repo_dir = './repos'
+
+# dir for report html files
+vis_dir = './vis'
+
+# execute gitstats command
+gitstats_cmd="python gitstats"
+
+#gitolite-admin config file
+git_config_file = "/Users/xxx/xxx/gitolite-admin/conf/gitolite.conf"
+#git url prefix, then git repo url:git_url_prefix + rep
+git_url_prefix = "git@192.168.1.241" # http://git.xxx.xxx/
+#
+filter_string = "test,gitolite-admin"
+
+# generate branch
+branch = "dev"
+
+#generate reports for per repo
+generate_per_repo = 0
+
+#generate one total report for all repo
+generate_all_repos = 1
+
+
